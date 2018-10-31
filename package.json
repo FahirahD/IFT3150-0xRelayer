@@ -1,0 +1,34 @@
+{
+  "name": "0x-relayer",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "0x.js": "^2.0.0",
+    "@0x/contract-wrappers": "^3.0.0",
+    "@0x/web3-wrapper": "^3.1.0",
+    "@babel/polyfill": "^7.0.0",
+    "lodash": "^4.17.11",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-scripts-ts": "3.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.8",
+    "@types/lodash": "^4.14.117",
+    "@types/node": "^10.12.1",
+    "@types/react": "^16.4.18",
+    "@types/react-dom": "^16.0.9",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "typescript": "^3.1.4"
+  }
+}
