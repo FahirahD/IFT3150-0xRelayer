@@ -5,31 +5,35 @@ import * as React from 'react';
 import { Token, TokenBalanceAllowance} from '../globals';
 import { ETHER_TOKEN , TOKENS_BY_NETWORK } from '../tokens';
 
-
 interface Iprops {
     web3Wrapper: Web3Wrapper;
     erc20TokenWrapper: ERC20TokenWrapper;
 }
 
+
+
 interface IaccountState {
     balances: {[address: string]:TokenBalanceAllowance[] };
-    selectedAccount:string;
-    
+    selectedAccount:string;  
 }
 
-// const ACCOUNT_CHECK_INTERVAL_MS = 2000;
+const ACCOUNT_CHECK_INTERVAL_MS = 2000;
 export  class Account extends React.Component<Iprops,IaccountState> {
 
     constructor(props: Iprops){
-        super(props)
+        super(props);
+        this.state = { balances: {}, selectedAccount: '' };
+        void this.fetchAccountDetailSAsync()
+        setInterval(() => {
+            void this.checkAccountChangeAsync();
+        }, ACCOUNT_CHECK_INTERVAL_MS);
 
     }
+    public async fetchAccountDetailSAsync(){
 
-    public async fetchAccountDetailAsync(){
-
-        const web3Wrapper = this.props.web3Wrapper;
+        const  web3Wrapper = this.props.web3Wrapper;
         const erc20TokenWrapper = this.props.erc20TokenWrapper;
-        const balances = this.state.balances
+        const balances  = this.state.balances
 
         const addresses = await web3Wrapper.getAvailableAddressesAsync();
         const address = addresses[0];
@@ -49,41 +53,52 @@ export  class Account extends React.Component<Iprops,IaccountState> {
                     return undefined
                 }
             })
+            
             const results = await Promise.all(allBalancesAsync);
             balances[address] = _.compact(results);
-
             // Fetch the Balance of Ether
             const weiBalance = await web3Wrapper.getBalanceInWeiAsync(address);
             balances[address] = [
                 ...balances[address],
-
                 {   allowance: new BigNumber(0),
                     balance: weiBalance,
                     token: ETHER_TOKEN,
                 } as TokenBalanceAllowance,
             ];
-
             this.setState(prev => {
                 const prevSelectedAccount = prev.selectedAccount;
                 const selectedAccount = prevSelectedAccount !== address ? address : prevSelectedAccount;
                 return { ...prev, balances, selectedAccount };
             });   
-
         }
-
+    
         else{
-                return
+            return
         }
-
         
-
-        
-
+    }
+    public async checkAccountChangeAsync() {
+        global.console.log(this.props)
+    
+        const web3Wrapper  = this.props.web3Wrapper;
+        const selectedAccount  = this.state.selectedAccount;
+        const addresses = await web3Wrapper.getAvailableAddressesAsync();
+        const address = addresses[0];
+        if (_.isUndefined(address)) {
+            return;
+        }
+        if (selectedAccount !== address) {
+            const balances = {};
+            // resetting the account state
+            this.setState(prev => ({ ...prev, balances, selectedAccount }));
+            void this.fetchAccountDetailSAsync();
+        }
     }
 
+
     public render(){
-        global.console.log(this.props.web3Wrapper)
-        return <div>h</div>
+        global.console.log(this.state.balances)
+        return <div>Account:{this.state.selectedAccount}</div>
     }
 
 

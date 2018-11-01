@@ -5,14 +5,11 @@ import * as React from 'react';
 import './App.css';
 import { Account } from './components/account';
 
-
-
 interface IAppState {
   web3Wrapper?: Web3Wrapper;
   contractWrappers?: ContractWrappers;
   web3?: any;
 }
-
 
 export class App extends React.Component <{}, IAppState > {
 
@@ -21,17 +18,20 @@ export class App extends React.Component <{}, IAppState > {
     void this._initWeb3Async()
     
 }
- 
+  
   public render() {
     if (!this.state || !this.state.contractWrappers || !this.state.web3Wrapper) {
       return <div />;
     }
     else{
       return (
-          <Account web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper= {this.state.contractWrappers.erc20Token}/>
+        <div>
+          {this.state.web3 && (<Account web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper= {this.state.contractWrappers.erc20Token}/> )}
+          {!this.state.web3 && <p>install metamask</p>}
+        </div>
+          
             );
     }
-
   }
   
   private async _initWeb3Async(): Promise <void> {
@@ -56,6 +56,9 @@ export class App extends React.Component <{}, IAppState > {
         ],
         abi => web3Wrapper.abiDecoder.addABI(abi),
     );
+    // global.console.log(web3)
+    // global.console.log(web3Wrapper)
+    // global.console.log(contractWrappers)
     this.setState({ web3Wrapper, contractWrappers, web3 });
       
     }
