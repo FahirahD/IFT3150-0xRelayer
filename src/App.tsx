@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import './App.css';
 import { Account } from './components/account';
+import {  InstallMetamask} from './components/installMetamask'
 
 interface IAppState {
   web3Wrapper?: Web3Wrapper;
@@ -27,7 +28,7 @@ export class App extends React.Component <{}, IAppState > {
       return (
         <div>
           {this.state.web3 && (<Account web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper= {this.state.contractWrappers.erc20Token}/> )}
-          {!this.state.web3 && <p>install metamask</p>}
+          {!this.state.web3 && (<InstallMetamask/>)}
         </div>
           
             );

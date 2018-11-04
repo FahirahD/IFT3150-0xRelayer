@@ -10,8 +10,6 @@ interface Iprops {
     erc20TokenWrapper: ERC20TokenWrapper;
 }
 
-
-
 interface IaccountState {
     balances: {[address: string]:TokenBalanceAllowance[] };
     selectedAccount:string;  
@@ -85,11 +83,13 @@ export  class Account extends React.Component<Iprops,IaccountState> {
         const addresses = await web3Wrapper.getAvailableAddressesAsync();
         const address = addresses[0];
         if (_.isUndefined(address)) {
+            this.setState({selectedAccount: '', balances:{}})
+            
             return;
         }
         if (selectedAccount !== address) {
             const balances = {};
-            // resetting the account state
+            // resetting the account state[address:string]:TokenBalanceAllowance[] 
             this.setState(prev => ({ ...prev, balances, selectedAccount }));
             void this.fetchAccountDetailSAsync();
         }
@@ -98,7 +98,13 @@ export  class Account extends React.Component<Iprops,IaccountState> {
 
     public render(){
         global.console.log(this.state.balances)
-        return <div>Account:{this.state.selectedAccount}</div>
+        if (this.state.selectedAccount === ''){
+         return('Sign in your Metamask account')
+        }
+        else{
+            return <div>Account:{this.state.selectedAccount}</div>
+        }
+        
     }
 
 
