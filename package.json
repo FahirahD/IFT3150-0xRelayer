@@ -4,13 +4,16 @@
   "private": true,
   "dependencies": {
     "0x.js": "^2.0.0",
+    "@0x/contract-artifacts": "^1.1.0",
     "@0x/contract-wrappers": "^3.0.0",
     "@0x/web3-wrapper": "^3.1.0",
     "@babel/polyfill": "^7.0.0",
+    "bloomer": "^0.6.5",
     "lodash": "^4.17.11",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts-ts": "3.1.0"
+    "react-scripts-ts": "3.1.0",
+    "react-toastify": "^4.4.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
