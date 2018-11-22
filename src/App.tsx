@@ -49,17 +49,14 @@ export class App extends React.Component <{}, IAppState > {
       const contractWrappers = new ContractWrappers (provider , {networkId})
 
       _.map(
-        [
-            contractWrappers.exchange.abi,
+        [contractWrappers.exchange.abi,
             contractWrappers.erc20Token.abi,
             contractWrappers.etherToken.abi,
             contractWrappers.forwarder.abi,
         ],
         abi => web3Wrapper.abiDecoder.addABI(abi),
     );
-    // global.console.log(web3)
-    // global.console.log(web3Wrapper)
-    // global.console.log(contractWrappers)
+ 
     this.setState({ web3Wrapper, contractWrappers, web3 });
       
     }

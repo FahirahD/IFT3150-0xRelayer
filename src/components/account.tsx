@@ -1,6 +1,6 @@
 import { BigNumber, ERC20TokenWrapper } from '0x.js';
-import { DummyERC20Token } from '@0x/contract-artifacts';
 import { DummyERC20TokenContract } from '@0x/abi-gen-wrappers';
+import { DummyERC20Token } from '@0x/contract-artifacts';
 import { Web3Wrapper } from '@0x/web3-wrapper';
 import { /*"Button,*/ Content, Icon, Subtitle, Table, Tag } from 'bloomer';
 import * as _ from 'lodash';
@@ -12,7 +12,7 @@ import { ETHER_TOKEN , TOKENS_BY_NETWORK } from '../tokens';
 interface Iprops {
     web3Wrapper: Web3Wrapper;
     erc20TokenWrapper: ERC20TokenWrapper;
-    //toastManager: { add: (msg: string, appearance: {}) => void }
+    // toastManager: { add: (msg: string, appearance: {}) => void }
 }
 
 interface IaccountState {
@@ -23,7 +23,7 @@ interface IaccountState {
 const ACCOUNT_CHECK_INTERVAL_MS = 2000;
 const MAX_MINTABLE_AMOUNT = new BigNumber('10000000000000000000000');
 const GREEN = '#00d1b2';
-export  class Account extends React.Component<Iprops,IaccountState> {
+export class Account extends React.Component<Iprops,IaccountState> {
 
     constructor(props: Iprops){
         super(props);
@@ -108,7 +108,7 @@ export  class Account extends React.Component<Iprops,IaccountState> {
             allowanceRender = tokenBalance.allowance.greaterThan(0) ? (
                 <Icon isSize="small" className="fa fa-check-circle" style={{ color: GREEN }} />
             ) : (
-                <a href="#" onClick={() => void this.setProxyAllowanceAsync(tokenBalance.token.address)}>
+                <a href="#" onClick={void this.setProxyAllowanceAsync(tokenBalance.token.address)}>
                     <Icon isSize="small" className="fa fa-lock" />
                 </a>
             );
@@ -139,7 +139,7 @@ export  class Account extends React.Component<Iprops,IaccountState> {
         const { selectedAccount } = this.state;
         const txHash = await erc20TokenWrapper.setUnlimitedProxyAllowanceAsync(tokenAddress, selectedAccount);
         global.console.log(txHash)
-        //void this.transactionSubmittedAsync(txHash);
+        // void this.transactionSubmittedAsync(txHash);
     }
     
     public async mintTokenAsync(tokenBalance: TokenBalanceAllowance) {
@@ -154,13 +154,13 @@ export  class Account extends React.Component<Iprops,IaccountState> {
         const amountToMint = BigNumber.min(maxAmount, balanceDiffToMaxAmount);
         const txHash = await token.mint.sendTransactionAsync(amountToMint, { from: selectedAccount });
         global.console.log(txHash)
-        //void this.transactionSubmittedAsync(txHash);
+        // void this.transactionSubmittedAsync(txHash);
     }
 
     public renderMintForTokenBalance(tokenBalance: TokenBalanceAllowance): React.ReactNode {
         if (tokenBalance.token.isMintable && tokenBalance.balance.lt(MAX_MINTABLE_AMOUNT)) {
             return (
-                <a href="#" onClick={() => void this.mintTokenAsync(tokenBalance)}>
+                <a href="#" onClick={void this.mintTokenAsync(tokenBalance)}>
                     <Icon isSize="small" className="fa fa-coins" />
                 </a>
             );
@@ -175,7 +175,7 @@ export  class Account extends React.Component<Iprops,IaccountState> {
         const selectedAccount = this.state.selectedAccount ; 
         const accountBalances = balances[selectedAccount]
 
-        if (!_.isEmpty){
+        if (!_.isEmpty(selectedAccount)){
             const balanceRows=_.map(accountBalances,(tokenBalance:TokenBalanceAllowance)=>{  
             const name = tokenBalance.token.name;
                 const symbol = tokenBalance.token.symbol;
