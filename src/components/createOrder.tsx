@@ -16,7 +16,6 @@ import { PanelBlockField } from '../panelBlockField';
 import { TOKENS, TOKENS_BY_NETWORK } from '../tokens';
 import { NULL_ADDRESS, ZERO } from '../utils';
 
-
 interface Iprops {
     contractWrappers: ContractWrappers;
     web3Wrapper: Web3Wrapper;
@@ -70,21 +69,19 @@ export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
         const exchangeAddress = contractWrappers.exchange.address;
         // Create the order
         const order: Order = {
-            exchangeAddress,
-            expirationTimeSeconds: new BigNumber(Date.now() + 10 * 60), // Time when this order expires
-            feeRecipientAddress: NULL_ADDRESS, // No fee recipient
             makerAddress, // maker is the first address
-            makerAssetAmount, // The maker asset amount
-            makerAssetData,
-            makerFee: ZERO, // 0 maker fees
-            salt: generatePseudoRandomSalt(), // Random value to provide uniqueness
-            senderAddress: NULL_ADDRESS, // Sender address is open and can be submitted by anyone
             takerAddress: NULL_ADDRESS, // taker is open and can be filled by anyone
+            makerAssetAmount, // The maker asset amount
             takerAssetAmount, // The taker asset amount
-            takerAssetData,
+            expirationTimeSeconds: new BigNumber(Date.now() + 10 * 60), // Time when this order expires
+            makerFee: ZERO, // 0 maker fees
             takerFee: ZERO, // 0 taker fees
-    
-            
+            feeRecipientAddress: NULL_ADDRESS, // No fee recipient
+            senderAddress: NULL_ADDRESS, // Sender address is open and can be submitted by anyone
+            salt: generatePseudoRandomSalt(), // Random value to provide uniqueness
+            makerAssetData,
+            takerAssetData,
+            exchangeAddress,
         };
         // Generate the order hash for the order
         const orderHashHex = orderHashUtils.getOrderHashHex(order);
@@ -118,7 +115,7 @@ export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
                 <Field hasAddons={true}>
                     <Control>{this.buildTokenSelector(TraderSide.MAKER)}</Control>
                     <Input
-                        onChange={this.orderTokenAmountChangedEvent.bind(TraderSide.MAKER)}
+                        onChange={(e: any) => this.orderTokenAmountChanged(e.target.value, TraderSide.MAKER)}
                         value={this.state.makerAmount}
                         type="text"
                         placeholder="Amount"
@@ -132,7 +129,7 @@ export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
                     <Control>{this.buildTokenSelector(TraderSide.TAKER)}</Control>
                     <Control isExpanded={true}>
                         <Input
-                            onChange={this.orderTokenAmountChangedEvent.bind(this,TraderSide.TAKER)}
+                            onChange={(e: any) => this.orderTokenAmountChanged(e.target.value, TraderSide.TAKER)}
                             value={this.state.takerAmount}
                             type="text"
                             placeholder="Amount"
@@ -176,19 +173,10 @@ export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
                 : { ...prevState, takerAmount: amount };
         });
     }
-
-    public orderTokenSelectedEvent(event:any,traderSide:TraderSide){
-        this.orderTokenSelected(event.target.value,traderSide)
-    }
-
-    public orderTokenAmountChangedEvent(event:any,traderSide:TraderSide){
-        this.orderTokenAmountChanged(event.target.value,traderSide)
-    }
-
     public buildTokenSelector = (traderSide: TraderSide) => {
         const selected = traderSide === TraderSide.MAKER ? this.state.makerTokenSymbol : this.state.takerTokenSymbol;
         return (
-            <Select onChange={this.orderTokenSelectedEvent.bind(this,traderSide)} value={selected}>
+            <Select onChange={(e: any) => this.orderTokenSelected(e.target.value, traderSide)} value={selected}>
                 {_.map(Object.keys(TOKENS), tokenSymbol => {
                     return (
                         <option key={`${tokenSymbol}-${traderSide}`} value={tokenSymbol}>
