@@ -1,14 +1,33 @@
 {
-  "extends": ["@0x/tslint-config"],
-  "rules": {
-      "typedef": false,
-      "no-implicit-dependencies": false,
-      "no-object-literal-type-assertion": false,
-      "completed-docs": false,
-      "prefer-function-over-method": false,
-      "custom-no-magic-numbers": false,
-      "no-console": false,
-      "no-unnecessary-type-assertion": false,
-      "jsx-no-lambda": false
-  }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "build/dist",
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "allowJs": true ,
+    "jsx-no-lambda": false  
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts"
+  ]
 }
