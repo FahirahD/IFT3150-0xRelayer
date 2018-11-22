@@ -4,9 +4,6 @@ import * as React from 'react';
 import { PanelBlockField } from '../panelBlockField';
 import { parseJSONSignedOrder } from '../utils';
 
-
-
-
 interface Iprops {
     contractWrappers: ContractWrappers;
     onTxSubmitted: (txHash: string) => void;
