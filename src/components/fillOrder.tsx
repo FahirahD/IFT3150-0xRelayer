@@ -26,8 +26,6 @@ export class FillOrder extends React.Component<Iprops, IfillOrderState> {
         const txHash = await contractWrappers.exchange.fillOrderAsync(signedOrder, takerFillAmount, takerAddress);
         return txHash;
     }
-
-    
     public render(): React.ReactNode {
         return (
             <div>
@@ -35,6 +33,7 @@ export class FillOrder extends React.Component<Iprops, IfillOrderState> {
                     <div>
                         Orders are filled when a taker submits them to the blockchain. This example executes a
                         fillOrder, filling the entire amount of the order.
+
                     </div>
                 </PanelBlock>
                 <PanelBlockField label="Order">
