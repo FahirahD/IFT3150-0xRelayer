@@ -13,13 +13,11 @@ interface IAppState {
   contractWrappers?: ContractWrappers;
   web3?: any;
 }
-
 export class App extends React.Component <{}, IAppState > {
 
   constructor(props: {}) {
     super(props);
     void this._initWeb3Async()
-    
 }
   
   public render() {
@@ -31,19 +29,14 @@ export class App extends React.Component <{}, IAppState > {
     else{
       return (
         <ToastProvider>
-          <div>
             {this.state.web3 && (
-            <NotifiableAccount web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper= {this.state.contractWrappers.erc20Token}/>
-            
+            <div>
+              <NotifiableAccount web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper = {this.state.contractWrappers.erc20Token}/>
+              <NotifiableZeroExActions web3Wrapper = {this.state.web3Wrapper} contractWrappers = {this.state.contractWrappers}/>
+            </div>
             )}
-
-            {this.state.web3 && (
-            <NotifiableZeroExActions web3Wrapper={this.state.web3Wrapper} contractWrappers={this.state.contractWrappers}></NotifiableZeroExActions>
-            
-            )}
-            
             {!this.state.web3 && (<InstallMetamask/>)}
-          </div>
+
         </ToastProvider>
           
             );

@@ -8,8 +8,6 @@ import * as React from 'react';
 import { Token, TokenBalanceAllowance} from '../globals';
 import { ETHER_TOKEN , TOKENS_BY_NETWORK } from '../tokens';
 
-
-
 interface Iprops {
     web3Wrapper: Web3Wrapper;
     erc20TokenWrapper: ERC20TokenWrapper;
@@ -82,15 +80,12 @@ export class Account extends React.Component<Iprops,IaccountState> {
         }    
     }
     public async checkAccountChangeAsync() {
-        global.console.log(this.props)
-    
         const web3Wrapper  = this.props.web3Wrapper;
         const selectedAccount  = this.state.selectedAccount;
         const addresses = await web3Wrapper.getAvailableAddressesAsync();
         const address = addresses[0];
         if (_.isUndefined(address)) {
             this.setState({selectedAccount: '', balances:{}})
-            global.console.log(this.state.balances)
             return;
         }
         if (selectedAccount !== address) {
@@ -177,7 +172,6 @@ export class Account extends React.Component<Iprops,IaccountState> {
             const name = tokenBalance.token.name;
                 const symbol = tokenBalance.token.symbol;
                 const image = tokenBalance.token.image ; 
-
                 const tokenImage = <img src={image} style={{ width: '28px', height: '28px' }} />;
 
                 const balance = Web3Wrapper.toUnitAmount(tokenBalance.balance,tokenBalance.token.decimals) ; 
@@ -210,7 +204,6 @@ export class Account extends React.Component<Iprops,IaccountState> {
                     </Table>
                 </div>
             );
-
             return(
                 <Content style={{ marginTop: '15px' }}>
                     <Subtitle isSize={6}>
@@ -222,7 +215,6 @@ export class Account extends React.Component<Iprops,IaccountState> {
                         </div>
                 </Content>
             );
-
         }
         else{
             return('Sign in your Metamask account')
