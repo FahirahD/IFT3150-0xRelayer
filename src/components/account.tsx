@@ -84,10 +84,12 @@ export class Account extends React.Component<Iprops,IaccountState> {
         const selectedAccount  = this.state.selectedAccount;
         const addresses = await web3Wrapper.getAvailableAddressesAsync();
         const address = addresses[0];
+        // if there is no address
         if (_.isUndefined(address)) {
             this.setState({selectedAccount: '', balances:{}})
             return;
         }
+        // we logged in a different account
         if (selectedAccount !== address) {
             const balances = {};
             // resetting the account state[address:string]:TokenBalanceAllowance[] 
@@ -161,7 +163,6 @@ export class Account extends React.Component<Iprops,IaccountState> {
         }
     }
 
-
     public render(){
         const balances = this.state.balances ;
         const selectedAccount = this.state.selectedAccount ; 
@@ -220,9 +221,4 @@ export class Account extends React.Component<Iprops,IaccountState> {
             return('Sign in your Metamask account')
         }
     }
-
-
-
-
-
 }
