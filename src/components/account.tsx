@@ -219,7 +219,6 @@ export class Account extends React.Component<Iprops,IaccountState> {
         else{
             return('Sign in your Metamask account')
         }
-        
     }
 
 
