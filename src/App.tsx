@@ -5,6 +5,7 @@ import * as React from 'react';
 import { ToastProvider, withToastManager }  from 'react-toast-notifications';
 import './App.css';
 import { Account } from './components/account';
+import {ZeroExActions} from './components/zeroexActions';
 import {  InstallMetamask} from './components/installMetamask'
 
 interface IAppState {
@@ -23,6 +24,7 @@ export class App extends React.Component <{}, IAppState > {
   
   public render() {
     const NotifiableAccount = withToastManager(Account);
+    const NotifiableZeroExActions = withToastManager(ZeroExActions);
     if (!this.state || !this.state.contractWrappers || !this.state.web3Wrapper) {
       return <div />;
     }
@@ -30,7 +32,16 @@ export class App extends React.Component <{}, IAppState > {
       return (
         <ToastProvider>
           <div>
-            {this.state.web3 && (<NotifiableAccount web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper= {this.state.contractWrappers.erc20Token}/> )}
+            {this.state.web3 && (
+            <NotifiableAccount web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper= {this.state.contractWrappers.erc20Token}/>
+            
+            )}
+
+            {this.state.web3 && (
+            <NotifiableZeroExActions web3Wrapper={this.state.web3Wrapper} contractWrappers={this.state.contractWrappers}></NotifiableZeroExActions>
+            
+            )}
+            
             {!this.state.web3 && (<InstallMetamask/>)}
           </div>
         </ToastProvider>
