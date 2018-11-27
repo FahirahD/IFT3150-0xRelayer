@@ -9,10 +9,11 @@ import { Token, TokenBalanceAllowance} from '../globals';
 import { ETHER_TOKEN , TOKENS_BY_NETWORK } from '../tokens';
 
 
+
 interface Iprops {
     web3Wrapper: Web3Wrapper;
     erc20TokenWrapper: ERC20TokenWrapper;
-    // toastManager: { add: (msg: string, appearance: {}) => void }
+    toastManager: { add: (msg: string, appearance: {}) => void }
 }
 
 interface IaccountState {
@@ -28,13 +29,13 @@ export class Account extends React.Component<Iprops,IaccountState> {
     constructor(props: Iprops){
         super(props);
         this.state = { balances: {}, selectedAccount: '' };
-        void this.fetchAccountDetailsAsync()
+        void this.fetchAccountInfosAsync()
         setInterval(() => {
             void this.checkAccountChangeAsync();
         }, ACCOUNT_CHECK_INTERVAL_MS);
     }
 
-    public async fetchAccountDetailsAsync(){
+    public async fetchAccountInfosAsync(){
 
         const  web3Wrapper = this.props.web3Wrapper;
         const erc20TokenWrapper = this.props.erc20TokenWrapper;
@@ -76,11 +77,9 @@ export class Account extends React.Component<Iprops,IaccountState> {
                 return { ...prev, balances, selectedAccount };
             });   
         }
-    
         else{
             return
-        }
-        
+        }    
     }
     public async checkAccountChangeAsync() {
         global.console.log(this.props)
@@ -98,7 +97,7 @@ export class Account extends React.Component<Iprops,IaccountState> {
             const balances = {};
             // resetting the account state[address:string]:TokenBalanceAllowance[] 
             this.setState(prev => ({ ...prev, balances, selectedAccount }));
-            void this.fetchAccountDetailsAsync();
+            void this.fetchAccountInfosAsync();
         }
     }
 
@@ -117,7 +116,7 @@ export class Account extends React.Component<Iprops,IaccountState> {
         }
         return allowanceRender;
     }
-/*
+
     public async transactionSubmittedAsync(txHash: string) {
         const { toastManager, web3Wrapper } = this.props;
         toastManager.add(`Transaction Submitted: ${txHash}`, {
@@ -130,16 +129,15 @@ export class Account extends React.Component<Iprops,IaccountState> {
             appearance,
             autoDismiss: true,
         });
-        await this.fetchAccountDetailsAsync();
+        await this.fetchAccountInfosAsync();
     }
-*/
+
 
   public async setProxyAllowanceAsync(tokenAddress: string) {
         const { erc20TokenWrapper } = this.props;
         const { selectedAccount } = this.state;
         const txHash = await erc20TokenWrapper.setUnlimitedProxyAllowanceAsync(tokenAddress, selectedAccount);
-        global.console.log(txHash)
-        // void this.transactionSubmittedAsync(txHash);
+        void this.transactionSubmittedAsync(txHash);
     }
     
     public async mintTokenAsync(tokenBalance: TokenBalanceAllowance) {
@@ -153,8 +151,7 @@ export class Account extends React.Component<Iprops,IaccountState> {
         const balanceDiffToMaxAmount = maxAmount.minus(tokenBalance.balance);
         const amountToMint = BigNumber.min(maxAmount, balanceDiffToMaxAmount);
         const txHash = await token.mint.sendTransactionAsync(amountToMint, { from: selectedAccount });
-        global.console.log(txHash)
-        // void this.transactionSubmittedAsync(txHash);
+        this.transactionSubmittedAsync(txHash);
     }
 
     public renderMintForTokenBalance(tokenBalance: TokenBalanceAllowance): React.ReactNode {

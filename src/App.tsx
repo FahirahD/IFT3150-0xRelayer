@@ -2,6 +2,7 @@ import { ContractWrappers, MetamaskSubprovider } from '0x.js';
 import { Web3Wrapper } from '@0x/web3-wrapper';
 import * as _ from 'lodash';
 import * as React from 'react';
+import { ToastProvider, withToastManager }  from 'react-toast-notifications';
 import './App.css';
 import { Account } from './components/account';
 import {  InstallMetamask} from './components/installMetamask'
@@ -21,15 +22,18 @@ export class App extends React.Component <{}, IAppState > {
 }
   
   public render() {
+    const NotifiableAccount = withToastManager(Account);
     if (!this.state || !this.state.contractWrappers || !this.state.web3Wrapper) {
       return <div />;
     }
     else{
       return (
-        <div>
-          {this.state.web3 && (<Account web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper= {this.state.contractWrappers.erc20Token}/> )}
-          {!this.state.web3 && (<InstallMetamask/>)}
-        </div>
+        <ToastProvider>
+          <div>
+            {this.state.web3 && (<NotifiableAccount web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper= {this.state.contractWrappers.erc20Token}/> )}
+            {!this.state.web3 && (<InstallMetamask/>)}
+          </div>
+        </ToastProvider>
           
             );
     }

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "0x.js": "^2.0.0",
+    "0x.js": "^2.0.5",
     "@0x/contract-artifacts": "^1.1.0",
     "@0x/contract-wrappers": "^3.0.0",
     "@0x/web3-wrapper": "^3.1.0",
@@ -12,7 +12,9 @@
     "lodash": "^4.17.11",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts-ts": "3.1.0",
+    "react-notifications": "^1.4.3",
+    "react-scripts-ts": "^4.0.8",
+    "react-toast-notifications": "^1.3.1",
     "react-toastify": "^4.4.0"
   },
   "scripts": {
@@ -33,5 +35,11 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "typescript": "^3.1.4"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

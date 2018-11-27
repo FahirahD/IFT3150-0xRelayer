@@ -10,7 +10,7 @@ import { FillOrder } from './fillOrder';
 import { GetOrderInfo } from './orderInfo';
 import { WrapEth } from './wrapETH';
 
-interface Props {
+interface Iprops {
     contractWrappers: ContractWrappers;
     web3Wrapper: Web3Wrapper;
     toastManager: { add: (msg: string, appearance: {}) => void };
@@ -23,11 +23,11 @@ enum FormType {
     WRAP_ETH = 'Wrap ETH',
     GET_ORDER_INFO = 'Order Info',
 }
-interface ZeroExActionsState {
+interface IzeroExActionsState {
     selectedForm: FormType;
 }
 
-export class ZeroExActions extends React.Component<Props, ZeroExActionsState> {
+export class ZeroExActions extends React.Component<Iprops, IzeroExActionsState> {
     public state = { selectedForm: FormType.CREATE };
     public onTxSubmitted = async (txHash: string) => {
         const { toastManager, web3Wrapper } = this.props;
