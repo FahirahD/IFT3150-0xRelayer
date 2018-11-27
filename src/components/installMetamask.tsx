@@ -17,7 +17,7 @@ export class InstallMetamask extends React.Component<{}> {
                         alt="Download Metamask"
                     />
                 </a>
-                <p> Once metamask is installed, please refresh this page </p>
+                <p> Refresh this page once MetaMask is installed </p>
             </div>
         );
     }

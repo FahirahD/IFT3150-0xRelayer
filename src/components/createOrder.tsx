@@ -30,12 +30,10 @@ interface IcreateOrderState {
     orderHash?: string;
     errorMessage?: string;
 }
-
 enum TraderSide {
     MAKER,
     TAKER,
 }
-
 export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
     constructor(props: Iprops) {
         super(props);
@@ -46,6 +44,7 @@ export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
             takerTokenSymbol: TOKENS.WETH.symbol,
         };
     }
+    
     public createOrderAsync = async (): Promise<SignedOrder> => {
         const { makerTokenSymbol, makerAmount, takerTokenSymbol, takerAmount } = this.state;
         const { web3Wrapper, contractWrappers } = this.props;

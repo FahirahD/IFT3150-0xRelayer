@@ -1,7 +1,6 @@
 import { ContractWrappers, orderHashUtils, OrderInfo, OrderStatus } from '0x.js';
 import { Button, Input, PanelBlock, TextArea } from 'bloomer';
 import * as React from 'react';
-
 import { parseJSONSignedOrder } from '../utils';
 import { PanelBlockField } from '../panelBlockField';
 
@@ -9,13 +8,11 @@ interface Props {
     contractWrappers: ContractWrappers;
     onTxSubmitted: (txHash: string) => void;
 }
-
 interface OrderInfoState {
     order?: string;
     orderInfo?: OrderInfo;
     orderHash?: string;
 }
-
 export class GetOrderInfo extends React.Component<Props, OrderInfoState> {
     public async getInfoAsync() {
         const { order } = this.state;
