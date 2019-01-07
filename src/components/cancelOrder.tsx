@@ -45,11 +45,11 @@ export class CancelOrder extends React.Component<Iprops, IcancelOrderState> {
                     </div>
                 </PanelBlock>
                 <PanelBlockField label="Order">
-                    <TextArea type="text" placeholder="Order" onChange={this.onOrderChange} />
+                    <TextArea type="text" placeholder="Order" onChange={this.onOrderChange.bind(this)} />
                 </PanelBlockField>
                 <PanelBlock>
                     <Button
-                        onClick={this.cancelOrderAsync}
+                        onClick={this.cancelOrderAsync.bind(this)}
                         isFullWidth={true}
                         isSize="small"
                         isColor="primary">

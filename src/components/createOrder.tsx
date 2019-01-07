@@ -38,9 +38,9 @@ export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
     constructor(props: Iprops) {
         super(props);
         this.state = {
-            makerAmount: '1',
+            makerAmount: '0.1',
             makerTokenSymbol: TOKENS.ZRX.symbol,
-            takerAmount: '1',
+            takerAmount: '0.1',
             takerTokenSymbol: TOKENS.WETH.symbol,
         };
     }
@@ -114,7 +114,8 @@ export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
                 <Field hasAddons={true}>
                     <Control>{this.buildTokenSelector(TraderSide.MAKER)}</Control>
                     <Input
-                        onChange={(e: any) => this.orderTokenAmountChanged(e.target.value, TraderSide.MAKER)}
+                        onChange={(e: any) => this.orderTokenAmountChanged(e.target.value, TraderSide.MAKER)
+}
                         value={this.state.makerAmount}
                         type="text"
                         placeholder="Amount"

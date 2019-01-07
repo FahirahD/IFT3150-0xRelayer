@@ -1,0 +1,222 @@
+{
+  "name": "ganache",
+  "productName": "Ganache",
+  "version": "1.2.3",
+  "description": "Personal Blockchain for Ethereum",
+  "main": "./src/init.js",
+  "private": true,
+  "scripts": {
+    "start": "electron-forge start",
+    "lint": "echo \"No linting configured\"",
+    "sign-mac": "codesign --deep --force --verbose --sign 'Developer ID Application: Timothy Coulter (58RKXWC272)' ./dist/*.dmg",
+    "makeappxassets": "svg2uwptiles -i ./Logo.svg -c ./blank.svg -o ./resources/appx/",
+    "build-linux": "cd ./node_modules/rabin-bindings && node-gyp rebuild && cd ../../ && electron-builder --linux",
+    "build-mac": "electron-builder --mac",
+    "build-windows": "electron-builder --win"
+  },
+  "browserslist": "chrome 50",
+  "build": {
+    "appId": "org.trufflesuite.ganache",
+    "files": [
+      "src/**/*",
+      "node_modules/**/*",
+      "resources/fonts/*",
+      "resources/icons/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "resources",
+      "output": "dist"
+    },
+    "win": {
+      "icon": "resources/icons/win/icon.ico",
+      "certificateFile": "./certs/cert.pfx",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "appx",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "appx": {
+      "identityName": "Ganache",
+      "publisher": "CN=Consensys Inc, O=Consensys Inc, L=New York, S=New York, C=US",
+      "publisherDisplayName": "Consensys Inc",
+      "backgroundColor": "#34262A"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": "true",
+      "deleteAppDataOnUninstall": "true",
+      "artifactName": "ganache-setup-${version}.${ext}"
+    },
+    "mac": {
+      "icon": "resources/icons/icon.icns",
+      "identity": "Timothy Coulter (58RKXWC272)"
+    },
+    "dmg": {
+      "background": "resources/dmg/background.tiff",
+      "contents": [
+        {
+          "x": 219,
+          "y": 358,
+          "type": "dir",
+          "name": "Ganache.app"
+        },
+        {
+          "x": 439,
+          "y": 358,
+          "type": "link",
+          "name": "Applications",
+          "path": "/Applications"
+        }
+      ],
+      "icon": "resources/icons/icon.icns",
+      "format": "ULFO"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "resources/icons/png/",
+      "category": "Development",
+      "executableName": "Ganache"
+    }
+  },
+  "config": {
+    "forge": {
+      "electronPackagerConfig": {
+        "icon": "resources/icons/win/icon.ico",
+        "prune": true,
+        "ignore": [
+          ".*node_modules/fsevents/build.*",
+          "forge_hooks",
+          ".vscode"
+        ],
+        "afterPrune": [
+          "./forge_hooks/afterPrune.js"
+        ]
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trufflesuite/ganache.git"
+  },
+  "author": {
+    "name": "Truffle",
+    "email": "inquiry@trufflesuite.com",
+    "url": "https://github.com/trufflesuite"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trufflesuite/ganache/issues"
+  },
+  "keywords": [
+    "ganache",
+    "ethereum",
+    "blockchain",
+    "truffle"
+  ],
+  "homepage": "https://github.com/trufflesuite/ganache#readme",
+  "devDependencies": {
+    "asar": "^0.13.0",
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-inline-react-svg": "^0.5.2",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.19.0",
+    "babel-plugin-transform-es2015-classes": "^6.18.0",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-react-optimize": "^1.0.1",
+    "babel-preset-stage-0": "^6.16.0",
+    "chai": "^3.5.0",
+    "concurrently": "^3.1.0",
+    "cross-env": "^3.1.4",
+    "electron-builder": "^20.31.2",
+    "electron-compilers": "^5.9.0",
+    "electron-debug": "^1.1.0",
+    "electron-devtools-installer": "^2.0.1",
+    "electron-forge": "^5.1.1",
+    "electron-icon-maker": "0.0.3",
+    "electron-log": "^2.2.9",
+    "electron-prebuilt-compile": "1.8.4",
+    "jsdom": "^9.9.1",
+    "minimist": "^1.2.0",
+    "mocha": "^3.2.0",
+    "node-sass": "^4.10.0",
+    "prop-types": "^15.5.10",
+    "rcedit": "^0.9.0",
+    "redux-logger": "^2.7.4",
+    "source-map-support": "^0.4.8",
+    "svg2uwptiles": "0.0.4",
+    "webpack": "^3.11.0"
+  },
+  "dependencies": {
+    "@exponent/electron-cookies": "^2.0.0",
+    "async": "^2.5.0",
+    "benjamincburns-forked-electron-updater": "2.21.6",
+    "builder-util-runtime": "^4.2.0",
+    "electron-compile": "^6.4.2",
+    "electron-settings": "^3.1.2",
+    "electron-squirrel-startup": "^1.0.0",
+    "ethereumjs-units": "^0.2.0",
+    "filesize": "^3.6.1",
+    "find-process": "^1.1.0",
+    "ganache-core": "^2.3.0",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.isequal": "^4.5.0",
+    "lodash.merge": "^4.6.1",
+    "lodash.omit": "^4.5.0",
+    "lodash.padstart": "^4.6.1",
+    "moment": "^2.17.1",
+    "moment-timezone": "^0.5.11",
+    "mousetrap": "^1.6.1",
+    "pidusage": "^1.1.5",
+    "pluralize": "^5.0.0",
+    "rabin-bindings": "^1.7.4",
+    "react": "^16.3.2",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "^16.3.2",
+    "react-hot-loader": "^3.1.1",
+    "react-marked-markdown": "^1.4.6",
+    "react-moment": "^0.2.2",
+    "react-redux": "^5.0.2",
+    "react-render-html": "^0.6.0",
+    "react-router": "^3.0.1",
+    "react-router-redux": "^4.0.7",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
+    "reselect": "^2.5.4",
+    "scrypt": "^6.0.3",
+    "universal-analytics": "^0.4.13",
+    "uuid": "^3.1.0",
+    "web3": "1.0.0-beta.35"
+  },
+  "optionalDependencies": {
+    "7zip-bin-win": "^2.2.0",
+    "dmg-builder": "^5.3.0"
+  },
+  "devEngines": {
+    "node": ">=6.x",
+    "npm": ">=3.x"
+  }
+}

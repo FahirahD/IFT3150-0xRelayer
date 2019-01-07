@@ -8,6 +8,7 @@ import { Account } from './components/account';
 import {ZeroExActions} from './components/zeroexActions';
 import {  InstallMetamask} from './components/installMetamask'
 
+
 interface IAppState {
   web3Wrapper?: Web3Wrapper;
   contractWrappers?: ContractWrappers;
@@ -54,6 +55,7 @@ export class App extends React.Component <{}, IAppState > {
 
       const web3Wrapper = new Web3Wrapper(provider);
       const networkId = await web3Wrapper.getNetworkIdAsync()
+      global.console.log(networkId)
       const contractWrappers = new ContractWrappers (provider , {networkId})
 
       _.map(
