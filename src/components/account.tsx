@@ -1,15 +1,19 @@
-import { BigNumber, ERC20TokenWrapper } from '0x.js';
+import { BigNumber, ContractWrappers,ERC20TokenWrapper } from '0x.js';
 import { DummyERC20TokenContract } from '@0x/abi-gen-wrappers';
 import { DummyERC20Token } from '@0x/contract-artifacts';
 import { Web3Wrapper } from '@0x/web3-wrapper';
-import { /*"Button,*/ Content, Icon, Subtitle, Table, Tag } from 'bloomer';
+import { withToastManager }  from 'react-toast-notifications';
+import {ZeroExActions} from './zeroexActions';
+import { /*"Button,*/ Icon} from 'bloomer';
 import * as _ from 'lodash';
 import * as React from 'react';
 import { Token, TokenBalanceAllowance} from '../globals';
 import { ETHER_TOKEN , TOKENS_BY_NETWORK } from '../tokens';
 
 interface Iprops {
+
     web3Wrapper: Web3Wrapper;
+    contractWrappers: ContractWrappers;
     erc20TokenWrapper: ERC20TokenWrapper;
     toastManager: { add: (msg: string, appearance: {}) => void }
 }
@@ -102,7 +106,8 @@ export class Account extends React.Component<Iprops,IaccountState> {
         let allowanceRender;
         if (tokenBalance.token.isTradeable) {
             allowanceRender = tokenBalance.allowance.greaterThan(0) ? (
-                <Icon isSize="small" className="fa fa-check-circle" style={{ color: GREEN }} />
+                //<Icon isSize="small" className="fa fa-check-circle" style={{ color: GREEN }} />
+                <Icon className="fa fa-check-circle" style={{color:GREEN}}></Icon>  
             ) : (
                 <a href="#" onClick={void this.setProxyAllowanceAsync(tokenBalance.token.address)}>
                     <Icon isSize="small" className="fa fa-lock" />
@@ -111,6 +116,7 @@ export class Account extends React.Component<Iprops,IaccountState> {
         } else {
             allowanceRender = <div />;
         }
+        global.console.log(allowanceRender)
         return allowanceRender;
     }
 
@@ -167,6 +173,7 @@ export class Account extends React.Component<Iprops,IaccountState> {
         const balances = this.state.balances ;
         const selectedAccount = this.state.selectedAccount ; 
         const accountBalances = balances[selectedAccount]
+        const NotifiableZeroExActions = withToastManager(ZeroExActions);
 
         if (!_.isEmpty(selectedAccount)){
             const balanceRows=_.map(accountBalances,(tokenBalance:TokenBalanceAllowance)=>{  
@@ -178,47 +185,97 @@ export class Account extends React.Component<Iprops,IaccountState> {
                 const balance = Web3Wrapper.toUnitAmount(tokenBalance.balance,tokenBalance.token.decimals) ; 
                 const balanceRender = balance.toFixed(4);
                 const allowanceRender = this.renderAllowanceForTokenBalance(tokenBalance);
-                const mintRender = this.renderMintForTokenBalance(tokenBalance);
+                //const mintRender = this.renderMintForTokenBalance(tokenBalance);
+
+              /*  const colStyle = {
+                    width: '500px',
+                    border: 'padding:0px'
+                }*/
+                const cardStyle = {
+                    height: 'auto',
+                    padding: '0px'
+                }
+                const cardBody = {
+                    height: '115px',
+                    margin: 'auto',
+                    width: '400px'
+                }
+                const img = {
+                    width:'30',
+                    height:'30'
+                }
+
+                const rowStyle = {
+                    width: 'auto',
+                    height: 'auto',
+                }
+                const h5Style = {
+                    height: 'auto',
+                    margin: '0',
+                    width: '154px',
+                    padding: '7.5px'
+                }
+                const h6Style = {
+                    height: 'auto',
+                    margin: '0',
+                    width: '200px',
+                    padding: '7.5px',
+                }
+                /*const i = {
+                    color:"rgb(53,203,40)",
+                    fontSize: "40px",
+                    paddingTop:"auto",
+                    paddingBottom:"auto",
+                    paddingLeft:"10px",
+                    margin:'10px auto',
+                    marginTop:"0"
+                }*/
                     return (
-                        <tr key={name}>
-                            <td>{tokenImage}</td>
-                            <td>{symbol}</td>
-                            <td>{balanceRender}</td>
-                            <td>{allowanceRender}</td>
-                            <td>{mintRender}</td>
-                        </tr>          
+                        <div key= {name} className="card" style={cardStyle}>
+                            <div className="card-body row" style={cardBody}>
+                                <div className ="row" style={img}> {tokenImage} </div>
+                                <div className ="col" style={rowStyle}>
+                                    <h5 className =".col"style={h5Style}>&nbsp;{symbol}&nbsp;</h5>
+                                    <h6 style={h6Style}>&nbsp;Balance: ${balanceRender}</h6>
+                                    <div>{allowanceRender}</div>
+                                </div>   
+                        </div>
+                                 
+                        </div>
                     )
             });
+            
             const contentRender = (
                 <div className="level level-left">
-                    <Table isNarrow={true}>
-                        <thead>
-                            <tr>
-                                <th>Token</th>
-                                <th>Symbol</th>
-                                <th>Balance</th>
-                                <th>Allowance</th>
-                                <th>Mint</th>
-                            </tr>
-                        </thead>
-                        <tbody>{balanceRows}</tbody>
-                    </Table>
+                        {balanceRows}
                 </div>
             );
             return(
-                <Content style={{ marginTop: '15px' }}>
-                    <Subtitle isSize={6}>
-                        <Tag>Account</Tag> {selectedAccount}</Subtitle>
-                        <div className="level">
-                            <div className="level-left">
-                                <div className="level-item">{contentRender}</div>
-                            </div>
+            <div>
+                <div className="row">
+                    <div className="card">
+                        <div className="card-body">
+                            <h4 className="card-title .col-md-5">Account :</h4>
+                            <p className="card-text .col-md-5">{selectedAccount}</p>
                         </div>
-                </Content>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className= 'col'>
+                        {contentRender}
+                    </div>
+                    <div>
+                        <NotifiableZeroExActions web3Wrapper = {this.props.web3Wrapper} contractWrappers = {this.props.contractWrappers}/>
+                    </div>
+                </div>
+            </div>     
             );
         }
         else{
-            return('Sign in your Metamask account')
+            return(
+                <div className='row'>Sign in your Metamask account</div>
+                )
         }
     }
 }

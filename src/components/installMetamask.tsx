@@ -5,7 +5,7 @@ export class InstallMetamask extends React.Component<{}> {
     public render() {
         return (
             <div>
-                <h1> Please install Metamask </h1>
+                <h1> Please install Metamask or Enable it on your browser </h1>
                 <a
                     href="https://metamask.io/"
                     target="_blank"

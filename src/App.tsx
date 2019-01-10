@@ -5,14 +5,18 @@ import * as React from 'react';
 import { ToastProvider, withToastManager }  from 'react-toast-notifications';
 import './App.css';
 import { Account } from './components/account';
-import {ZeroExActions} from './components/zeroexActions';
 import {  InstallMetamask} from './components/installMetamask'
+import { Navbar } from './components/navbar';
+
+
+
 
 
 interface IAppState {
   web3Wrapper?: Web3Wrapper;
   contractWrappers?: ContractWrappers;
   web3?: any;
+  addresses?:any;
 }
 export class App extends React.Component <{}, IAppState > {
 
@@ -20,27 +24,66 @@ export class App extends React.Component <{}, IAppState > {
     super(props);
     void this._initWeb3Async()
 }
+
+  public async isAdresses(){
+      try {
+        if(!_.isUndefined(this.state.web3Wrapper)){
+          const a =await  Promise.all(await this.state.web3Wrapper.getAvailableAddressesAsync())
+            console.log(this.state.addresses[0])
+            console.log(a[0])
+          if (this.state.addresses[0] !== a[0]){
+            this.setState({addresses:a})
+            return this.state.addresses
+          }
+          else{
+            return undefined
+          }
+      }
+      else{
+        return undefined
+      }
+    }
+      catch (e) {
+        return undefined
+       
+      }
+  }
   
+
   public render() {
+
+   /* const div1 = {
+      width: '500px',
+      border: 'padding: 0'
+    };
+
+    const div2 = {
+      width: '500px',
+      border: 'padding: 0',
+      padding:'auto 0'
+    };*/
+    
     const NotifiableAccount = withToastManager(Account);
-    const NotifiableZeroExActions = withToastManager(ZeroExActions);
+    console.log(this.isAdresses)
     if (!this.state || !this.state.contractWrappers || !this.state.web3Wrapper) {
-      return <div />;
+      return <InstallMetamask/>;
     }
     else{
       return (
-        <ToastProvider>
-            {this.state.web3 && (
-            <div>
-              <NotifiableAccount web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper = {this.state.contractWrappers.erc20Token}/>
-              <NotifiableZeroExActions web3Wrapper = {this.state.web3Wrapper} contractWrappers = {this.state.contractWrappers}/>
-            </div>
-            )}
-            {!this.state.web3 && (<InstallMetamask/>)}
-
-        </ToastProvider>
-          
-            );
+      <div>
+        <main className="page landing-page">
+        <div className="container">
+          <Navbar/>
+          <ToastProvider>
+              {this.state.web3 && (
+                  <NotifiableAccount web3Wrapper = {this.state.web3Wrapper} erc20TokenWrapper = {this.state.contractWrappers.erc20Token} contractWrappers={this.state.contractWrappers}/>
+              )}
+              {!this.state.web3 && (<InstallMetamask/>)}
+          </ToastProvider>
+          </div> 
+        </main>
+      </div>
+      );
     }
   }
   
@@ -55,9 +98,9 @@ export class App extends React.Component <{}, IAppState > {
 
       const web3Wrapper = new Web3Wrapper(provider);
       const networkId = await web3Wrapper.getNetworkIdAsync()
-      global.console.log(networkId)
       const contractWrappers = new ContractWrappers (provider , {networkId})
-
+      const addresses = Promise.all(await web3Wrapper.getAvailableAddressesAsync())
+      
       _.map(
         [contractWrappers.exchange.abi,
             contractWrappers.erc20Token.abi,
@@ -66,8 +109,8 @@ export class App extends React.Component <{}, IAppState > {
         ],
         abi => web3Wrapper.abiDecoder.addABI(abi),
     );
- 
-    this.setState({ web3Wrapper, contractWrappers, web3 });
+    this.setState({ web3Wrapper, contractWrappers, web3,addresses});
+    
       
     }
     
