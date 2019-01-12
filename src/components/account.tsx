@@ -235,7 +235,7 @@ export class Account extends React.Component<Iprops,IaccountState> {
                             <div className="card-body row" style={cardBody}>
                                 <div className ="row" style={img}> {tokenImage} </div>
                                 <div className ="col" style={rowStyle}>
-                                    <h5 className =".col"style={h5Style}>&nbsp;{symbol}&nbsp;</h5>
+                                    <h5 className ="col"style={h5Style}>&nbsp;{symbol}&nbsp;</h5>
                                     <h6 style={h6Style}>&nbsp;Balance: ${balanceRender}</h6>
                                     <div>{allowanceRender}</div>
                                 </div>   
@@ -246,30 +246,28 @@ export class Account extends React.Component<Iprops,IaccountState> {
             });
             
             const contentRender = (
-                <div className="level level-left">
+                <div className="">
                         {balanceRows}
                 </div>
             );
-            return(
-            <div>
-                <div className="row">
-                    <div className="card">
-                        <div className="card-body">
-                            <h4 className="card-title .col-md-5">Account :</h4>
-                            <p className="card-text .col-md-5">{selectedAccount}</p>
+            return(<div className="row">
+                        <div className="col">
+                            <div className="row">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h4 className="card-title .col-md-5">Account :</h4>
+                                        <p className="card-text .col-md-5">{selectedAccount}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className= 'row'>
+                                {contentRender}
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className= 'col'>
-                        {contentRender}
-                    </div>
-                    <div>
+                    <div className="col">
                         <NotifiableZeroExActions web3Wrapper = {this.props.web3Wrapper} contractWrappers = {this.props.contractWrappers}/>
                     </div>
                 </div>
-            </div>     
             );
         }
         else{
