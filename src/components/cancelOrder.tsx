@@ -38,12 +38,6 @@ export class CancelOrder extends React.Component<Iprops, IcancelOrderState> {
     public render(): React.ReactNode {
         return (
             <div>
-                <PanelBlock>
-                    <div>
-                        Orders natuarally expire after the specified expiry time has passed. To cancel an order which
-                        has not passed the expiry time, it must be cancelled on chain by calling cancelOrder.
-                    </div>
-                </PanelBlock>
                 <PanelBlockField label="Order">
                     <TextArea type="text" placeholder="Order" onChange={this.onOrderChange.bind(this)} />
                 </PanelBlockField>
@@ -52,7 +46,7 @@ export class CancelOrder extends React.Component<Iprops, IcancelOrderState> {
                         onClick={this.cancelOrderAsync.bind(this)}
                         isFullWidth={true}
                         isSize="small"
-                        isColor="primary">
+                        isColor="link">
                         Cancel Order
                     </Button>
                 </PanelBlock>

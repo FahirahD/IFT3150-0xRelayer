@@ -80,17 +80,19 @@ export class ZeroExActions extends React.Component<Iprops, IzeroExActionsState> 
             );
         });
         return (
-            <Content>
-                <Subtitle isSize={6}>0x options</Subtitle>
-                <Columns>
-                    <Column isSize={{ mobile: 11, default: 7 }}>
-                        <Panel>
-                            <PanelTabs>{panelTabsRender}</PanelTabs>
-                            {currentFormRender}
-                        </Panel>
-                    </Column>
-                </Columns>
-            </Content>
+            <div>
+                <Content>
+                    <Subtitle isSize={6}>0x options</Subtitle>
+                    <Columns>
+                        <Column isSize={{ mobile: 11, default: 7 }}>
+                            <Panel>
+                                <PanelTabs>{panelTabsRender}</PanelTabs>
+                                {currentFormRender}
+                            </Panel>
+                        </Column>
+                    </Columns>
+                </Content>
+            </div>
         );
     }
 }

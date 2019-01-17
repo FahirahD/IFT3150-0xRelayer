@@ -44,11 +44,6 @@ export class GetOrderInfo extends React.Component<Props, OrderInfoState> {
             );
         return (
             <div>
-                <PanelBlock>
-                    <div>
-                        Retrieve information about the Order from the Exchange contract.
-                    </div>
-                </PanelBlock>
                 <PanelBlockField label="Order">
                     <TextArea
                         type="text"
@@ -61,7 +56,7 @@ export class GetOrderInfo extends React.Component<Props, OrderInfoState> {
                 </PanelBlockField>
                 {orderInfoRender}
                 <PanelBlock>
-                    <Button onClick={this.getInfoAsync.bind(this)} isFullWidth={true} isSize="small" isColor="primary">
+                    <Button onClick={this.getInfoAsync.bind(this)} isFullWidth={true} isSize="small" isColor="link">
                         Get Order Info
                     </Button>
                 </PanelBlock>

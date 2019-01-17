@@ -29,11 +29,6 @@ export class FillOrder extends React.Component<Iprops, IfillOrderState> {
     public render(): React.ReactNode {
         return (
             <div>
-                <PanelBlock>
-                    <div>
-                        Orders are filled when a taker submits them to the blockchain.
-                    </div>
-                </PanelBlock>
                 <PanelBlockField label="Order">
                     <TextArea
                         type="text"
@@ -49,7 +44,7 @@ export class FillOrder extends React.Component<Iprops, IfillOrderState> {
                         onClick={this.fillOrderClick.bind(this)}
                         isFullWidth={true}
                         isSize="small"
-                        isColor="primary"
+                        isColor="link"
                     >
                         Fill Order
                     </Button>

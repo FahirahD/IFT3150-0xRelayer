@@ -16,6 +16,7 @@ import { PanelBlockField } from '../panelBlockField';
 import { TOKENS, TOKENS_BY_NETWORK } from '../tokens';
 import { NULL_ADDRESS, ZERO } from '../utils';
 
+
 interface Iprops {
     contractWrappers: ContractWrappers;
     web3Wrapper: Web3Wrapper;
@@ -66,6 +67,8 @@ export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
         const makerAssetAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(makerAmount), makerToken.decimals);
         const takerAssetAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(takerAmount), takerToken.decimals);
         const exchangeAddress = contractWrappers.exchange.address;
+        console.log(makerAssetAmount.toString())
+        console.log(takerAssetAmount)
         // Create the order
         const order: Order = {
             makerAddress, // maker is the first address
@@ -141,18 +144,12 @@ export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
         const errorMessageRender = this.state.errorMessage ? <div>{this.state.errorMessage}</div> : <div />;
         return (
             <div>
-                <PanelBlock>
-                    <div>
-                        Creates a 0x order, specifying the Maker and Taker tokens and their amounts. Orders are signed
-                        by the maker. Takers find these signed orders and "fill" them by submitting to the blockchain.
-                    </div>
-                </PanelBlock>
                 {makerTokenRender}
                 {takerTokenRender}
                 {errorMessageRender}
                 {signedOrderRender}
                 <PanelBlock>
-                    <Button onClick={this.createOrderAsync} isFullWidth={true} isSize="small" isColor="primary">
+                    <Button onClick={this.createOrderAsync} isFullWidth={true} isSize="small" isColor="link">
                         Sign Order
                     </Button>
                 </PanelBlock>

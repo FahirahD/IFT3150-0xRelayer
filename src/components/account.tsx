@@ -3,6 +3,7 @@ import { DummyERC20TokenContract } from '@0x/abi-gen-wrappers';
 import { DummyERC20Token } from '@0x/contract-artifacts';
 import { Web3Wrapper } from '@0x/web3-wrapper';
 import { withToastManager }  from 'react-toast-notifications';
+import {Faucet} from './faucet'
 import {ZeroExActions} from './zeroexActions';
 import { /*"Button,*/ Icon} from 'bloomer';
 import * as _ from 'lodash';
@@ -193,7 +194,6 @@ export class Account extends React.Component<Iprops,IaccountState> {
                 }*/
                 const cardStyle = {
                     height: 'auto',
-                    padding: '0px'
                 }
                 const cardBody = {
                     height: '115px',
@@ -204,7 +204,6 @@ export class Account extends React.Component<Iprops,IaccountState> {
                     width:'30',
                     height:'30'
                 }
-
                 const rowStyle = {
                     width: 'auto',
                     height: 'auto',
@@ -230,6 +229,7 @@ export class Account extends React.Component<Iprops,IaccountState> {
                     margin:'10px auto',
                     marginTop:"0"
                 }*/
+
                     return (
                         <div key= {name} className="card" style={cardStyle}>
                             <div className="card-body row" style={cardBody}>
@@ -264,15 +264,25 @@ export class Account extends React.Component<Iprops,IaccountState> {
                                 {contentRender}
                             </div>
                         </div>
+                    
                     <div className="col">
                         <NotifiableZeroExActions web3Wrapper = {this.props.web3Wrapper} contractWrappers = {this.props.contractWrappers}/>
+
                     </div>
+                    <div className="row"><Faucet web3Wrapper={this.props.web3Wrapper}></Faucet></div>
                 </div>
             );
         }
         else{
+            const signIn = {
+            minHeight: '100vh',
+            padding:' auto auto'
+        }
+         const header = {
+            margin:'auto auto'
+         }
             return(
-                <div className='row'>Sign in your Metamask account</div>
+                <div className='row' style = {signIn}><h1 style={header}>Sign in your Metamask account</h1></div>
                 )
         }
     }

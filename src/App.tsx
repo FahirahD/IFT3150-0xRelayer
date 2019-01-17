@@ -66,7 +66,16 @@ export class App extends React.Component <{}, IAppState > {
     const NotifiableAccount = withToastManager(Account);
     console.log(this.isAdresses)
     if (!this.state || !this.state.contractWrappers || !this.state.web3Wrapper) {
-      return <InstallMetamask/>;
+      return (
+        <div>
+          <main className="page landing-page">
+            <div className="container">
+              <Navbar/>
+              <InstallMetamask/>
+            </div> 
+        </main>
+      </div>
+      )
     }
     else{
       return (

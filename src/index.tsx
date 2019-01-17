@@ -5,6 +5,7 @@ import App from './App';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bulma/css/bulma.css'
 
 ReactDOM.render(
     <App/>

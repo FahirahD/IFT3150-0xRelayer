@@ -44,12 +44,6 @@ export class WrapEth extends React.Component<Props, WrapEthState> {
     public render(): React.ReactNode {
         return (
             <div>
-                <PanelBlock>
-                    <div>
-                        ETH is not an ERC20 token and it must first be wrapped to be used in 0x. ETH can be wrapped to
-                        become wETH and wETH can be unwrapped retrieve ETH.
-                    </div>
-                </PanelBlock>
                 <PanelBlockField label="Amount">
                     <Input
                         type="text"
@@ -65,11 +59,11 @@ export class WrapEth extends React.Component<Props, WrapEthState> {
                                 style={{ marginRight: '10px' }}
                                 onClick={this.wrapEthAsync.bind(this)}
                                 isSize="small"
-                                isColor="primary"
+                                isColor="link"
                             >
                                 Wrap
                             </Button>
-                            <Button onClick={this.unwrapEthAsync.bind(this)} isSize="small" isColor="primary">
+                            <Button onClick={this.unwrapEthAsync.bind(this)} isSize="small" isColor="link">
                                 Unwrap
                             </Button>
                         </Control>
