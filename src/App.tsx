@@ -64,7 +64,6 @@ export class App extends React.Component <{}, IAppState > {
     };*/
     
     const NotifiableAccount = withToastManager(Account);
-    console.log(this.isAdresses)
     if (!this.state || !this.state.contractWrappers || !this.state.web3Wrapper) {
       return (
         <div>

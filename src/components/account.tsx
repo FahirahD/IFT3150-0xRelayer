@@ -3,7 +3,6 @@ import { DummyERC20TokenContract } from '@0x/abi-gen-wrappers';
 import { DummyERC20Token } from '@0x/contract-artifacts';
 import { Web3Wrapper } from '@0x/web3-wrapper';
 import { withToastManager }  from 'react-toast-notifications';
-import {Faucet} from './faucet'
 import {ZeroExActions} from './zeroexActions';
 import { /*"Button,*/ Icon} from 'bloomer';
 import * as _ from 'lodash';
@@ -267,9 +266,8 @@ export class Account extends React.Component<Iprops,IaccountState> {
                     
                     <div className="col">
                         <NotifiableZeroExActions web3Wrapper = {this.props.web3Wrapper} contractWrappers = {this.props.contractWrappers}/>
-
                     </div>
-                    <div className="row"><Faucet web3Wrapper={this.props.web3Wrapper}></Faucet></div>
+                    
                 </div>
             );
         }

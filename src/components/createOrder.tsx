@@ -39,9 +39,9 @@ export class CreateOrder extends React.Component<Iprops, IcreateOrderState> {
     constructor(props: Iprops) {
         super(props);
         this.state = {
-            makerAmount: '0.1',
+            makerAmount: '1',
             makerTokenSymbol: TOKENS.ZRX.symbol,
-            takerAmount: '0.1',
+            takerAmount: '1',
             takerTokenSymbol: TOKENS.WETH.symbol,
         };
     }

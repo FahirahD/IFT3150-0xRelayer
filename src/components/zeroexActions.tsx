@@ -79,10 +79,15 @@ export class ZeroExActions extends React.Component<Iprops, IzeroExActionsState> 
                 </a>
             );
         });
+
+        let div = {
+            marginTop:"20px"
+        }
         return (
-            <div>
+
+            <div style={div}>
                 <Content>
-                    <Subtitle isSize={6}>0x options</Subtitle>
+                    <Subtitle > 0x options</Subtitle>
                     <Columns>
                         <Column isSize={{ mobile: 11, default: 7 }}>
                             <Panel>
